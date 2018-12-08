@@ -3,6 +3,9 @@
   <groupId>com.revature</groupId>
   <artifactId>Project1</artifactId>
   <version>0.0.1-SNAPSHOT</version>
+      <build>
+        <finalName>Project1</finalName>
+    </build>
  <dependencies>
 		<!-- JDK Tools -->
 		<dependency>
