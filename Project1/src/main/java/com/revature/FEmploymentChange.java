@@ -26,7 +26,7 @@ public class FEmploymentChange {
 			
 			job.setJarByClass(FEmploymentChange.class);
 			
-			job.setJobName("Word Count");
+			job.setJobName("Female Employmnt Change");
 			
 			FileInputFormat.setInputPaths(job,  new Path(args[0]));
 			FileOutputFormat.setOutputPath(job, new Path(args[1]));

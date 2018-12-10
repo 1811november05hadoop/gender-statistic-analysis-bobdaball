@@ -6,8 +6,8 @@ import org.apache.hadoop.io.DoubleWritable;
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Reducer;
 
-public class FEmploymentPercentReducer extends Reducer<Text, Text, Text, DoubleWritable> {
-	
+public class MEmploymentPercentReducer extends Reducer<Text, Text, Text, DoubleWritable>{
+
 	@Override
 	protected void reduce(Text key, Iterable<Text> values,
 			Reducer<Text, Text, Text, DoubleWritable>.Context context)
