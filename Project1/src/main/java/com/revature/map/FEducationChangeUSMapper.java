@@ -27,7 +27,8 @@ public class FEducationChangeUSMapper extends Mapper<LongWritable, Text, Text, D
 				String doubleStr = columns[i].trim();
 				
 				if (doubleStr.length() > 0 && !doubleStr.contains(",")) {
-					context.write(new Text(category + "-"), new DoubleWritable(Double.parseDouble(doubleStr)));
+					
+					context.write(new Text(category + ": "), new DoubleWritable(Double.parseDouble(doubleStr)));
 				}
 			}
 		}
