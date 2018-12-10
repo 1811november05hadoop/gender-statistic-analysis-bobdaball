@@ -22,7 +22,7 @@ public class FEducationChangeUSReducer extends Reducer<Text, DoubleWritable, Tex
 			if (previous == -5000.00) {
 				previous = value.get();
 			} else {
-				change = (value.get() / previous) * 100;
+				change = (value.get() - previous) / previous * 100;
 				previous = value.get();
 				changesPercents.append(change + " ");
 			}

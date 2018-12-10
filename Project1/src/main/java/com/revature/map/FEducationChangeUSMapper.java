@@ -20,7 +20,7 @@ public class FEducationChangeUSMapper extends Mapper<LongWritable, Text, Text, D
 		
 		String line = value.toString();
 		
-		if (line.contains(eduAttain) && line.contains("female") && !line.contains(cumu)) {
+		if (line.contains(eduAttain) && line.contains("female") && !line.contains(cumu) && line.contains("United States")) {
 			String[] columns = line.split("\",\"", -1);
 			String category = columns[2];
 			for (int i = 44; i < columns.length; i++) {

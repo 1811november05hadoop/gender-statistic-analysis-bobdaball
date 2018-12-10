@@ -32,7 +32,7 @@ public class FEmploymentChange {
 			FileOutputFormat.setOutputPath(job, new Path(args[1]));
 			
 			job.setMapperClass(FEmploymentMapper.class);
-//			job.setReducerClass(FEmploymentPercentReducer.class);
+			job.setReducerClass(FEmploymentPercentReducer.class);
 			
 			job.setOutputKeyClass(Text.class);
 			job.setOutputValueClass(DoubleWritable.class);
