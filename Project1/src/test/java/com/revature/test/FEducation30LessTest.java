@@ -21,6 +21,8 @@ public class FEducation30LessTest {
 
 	private MapReduceDriver<LongWritable, Text, Text, IntWritable, Text, IntWritable> mapReduceDriver;
 
+	String criterion = "Gross graduation ratio, tertiary, female (%)";
+	
 	@Before
 	public void setUp() {
 		FEducation30LessMapper mapper = new FEducation30LessMapper();
@@ -43,7 +45,7 @@ public class FEducation30LessTest {
 		 */
 		String exInput = "";
 		mapDriver.withInput(new LongWritable(1), new Text(exInput));
-//		mapDriver.withOutput(key, val);
+		mapDriver.withOutput(key, val);
 	}
 	
 	@Test
