@@ -3,7 +3,6 @@ package com.revature;
 import java.io.IOException;
 
 import org.apache.hadoop.fs.Path;
-import org.apache.hadoop.io.DoubleWritable;
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Job;
 import org.apache.hadoop.mapreduce.lib.input.FileInputFormat;
@@ -39,7 +38,7 @@ public class HealthExpenditures {
 		job.setReducerClass(HealthStatsReducer.class);
 
 		job.setOutputKeyClass(Text.class);
-		job.setOutputValueClass(DoubleWritable.class);
+		job.setOutputValueClass(Text.class);
 
 		boolean success = job.waitForCompletion(true);
 		System.exit(success ? 0 : 1);
