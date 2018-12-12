@@ -21,7 +21,7 @@ public class FEducation30LessMapper extends Mapper<LongWritable, Text, Text, Int
 		String line = value.toString();	
 		
 		if (line.contains(edu30Minus)) {
-			String[] columns = line.split("\",\"", -1);
+			String[] columns = line.substring(1,line.length()-2).split("\",\"", -1);
 			
 			for (int i = 4; i < columns.length; i++) {
 				String doubleStr = columns[i];

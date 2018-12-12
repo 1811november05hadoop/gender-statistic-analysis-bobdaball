@@ -27,10 +27,12 @@ public class FEmploymentMapper extends Mapper<LongWritable, Text, Text, Text> {
 
 		if (isCountry) {
 			if (line.contains(criterion)) {
-				String[] columns = line.split("\",\"", -1);
-
+			
+				String[] columns = line.substring(1,line.length()-2).split("\",\"", -1);
+				
 				for (int i = 44; i < columns.length; i++) {
 					String doubleStr = columns[i];
+					
 					if (doubleStr.length() > 0) {
 						if (numDiff[0] == 0) {
 							numDiff[0] = Double.parseDouble(doubleStr);

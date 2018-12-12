@@ -10,7 +10,7 @@ import org.apache.hadoop.mapreduce.lib.input.FileInputFormat;
 import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
 
 import com.revature.map.MEmploymentMapper;
-import com.revature.reduce.MEmploymentPercentReducer;
+import com.revature.reduce.EmploymentPercentReducer;
 
 public class MEmploymentChange {
 	public static void main(String[] args) throws IOException {
@@ -31,7 +31,7 @@ public class MEmploymentChange {
 		FileOutputFormat.setOutputPath(job, new Path(args[1]));
 
 		job.setMapperClass(MEmploymentMapper.class);
-		job.setReducerClass(MEmploymentPercentReducer.class);
+		job.setReducerClass(EmploymentPercentReducer.class);
 
 		job.setOutputKeyClass(Text.class);
 		job.setOutputValueClass(DoubleWritable.class);
