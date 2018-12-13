@@ -1,32 +1,42 @@
 package com.revature.test;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import org.apache.hadoop.io.IntWritable;
+import org.apache.hadoop.io.LongWritable;
+import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mrunit.mapreduce.MapDriver;
+import org.apache.hadoop.mrunit.mapreduce.MapReduceDriver;
 import org.apache.hadoop.mrunit.mapreduce.ReduceDriver;
 import org.junit.Before;
 import org.junit.Test;
 
+import com.revature.map.FEmploymentMapper;
+import com.revature.reduce.EmploymentPercentReducer;
+
 public class FEmploymentChangeTest {
-	private MapDriver<> mapDriver;
-	private ReduceDriver<> reduceDriver;
-	private mapReduceDriver<> mapReduceDriver;
+	private MapDriver<LongWritable, Text, Text, Text> mapDriver;
+	private ReduceDriver<Text, Text, Text, Text> reduceDriver;
+	private MapReduceDriver<LongWritable, Text, Text, Text, Text, Text> mapReduceDriver;
 
 	@Before
 	public void setUp() {
-		WordMapper mapper = new WordMapper();
-		mapDriver = new MapDriver<LongWritable, Text, Text, IntWritable>();
+		FEmploymentMapper mapper = new FEmploymentMapper();
+		mapDriver = new MapDriver<LongWritable, Text, Text, Text>();
 		mapDriver.setMapper(mapper);
 
 		/*
 		 * Set up the reducer test harness.
 		 */
-		SumReducer reducer = new SumReducer();
-		reduceDriver = new ReduceDriver<Text, IntWritable, Text, IntWritable>();
+		EmploymentPercentReducer reducer = new EmploymentPercentReducer();
+		reduceDriver = new ReduceDriver<Text, Text, Text, Text>();
 		reduceDriver.setReducer(reducer);
 
 		/*
 		 * Set up the mapper/reducer test harness.
 		 */
-		mapReduceDriver = new MapReduceDriver<LongWritable, Text, Text, IntWritable, Text, IntWritable>();
+		mapReduceDriver = new MapReduceDriver<LongWritable, Text, Text, Text, Text, Text>();
 		mapReduceDriver.setMapper(mapper);
 		mapReduceDriver.setReducer(reducer);
 	}

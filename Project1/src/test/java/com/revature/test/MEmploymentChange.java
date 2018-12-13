@@ -1,13 +1,29 @@
 package com.revature.test;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import org.apache.hadoop.io.IntWritable;
+import org.apache.hadoop.io.LongWritable;
+import org.apache.hadoop.io.Text;
+import org.apache.hadoop.mrunit.mapreduce.MapDriver;
+import org.apache.hadoop.mrunit.mapreduce.MapReduceDriver;
+import org.apache.hadoop.mrunit.mapreduce.ReduceDriver;
+import org.junit.Before;
+import org.junit.Test;
+
+import com.revature.map.MEmploymentMapper;
+import com.revature.reduce.EmploymentPercentReducer;
+
 public class MEmploymentChange {
 	 /*
 	   * Declare harnesses that let you test a mapper, a reducer, and
 	   * a mapper and a reducer working together.
 	   */
-	  private MapDriver<LongWritable, Text, Text, IntWritable> mapDriver;
-	  private ReduceDriver<Text, IntWritable, Text, IntWritable> reduceDriver;
-	  private MapReduceDriver<LongWritable, Text, Text, IntWritable, Text, IntWritable> mapReduceDriver;
+	private MapDriver<LongWritable, Text, Text, Text> mapDriver;
+	private ReduceDriver<Text, Text, Text, Text> reduceDriver;
+	private MapReduceDriver<LongWritable, Text, Text, Text, Text, Text> mapReduceDriver;
+
 
 	  /*
 	   * Set up the test. This method will be called before every test.
@@ -18,21 +34,21 @@ public class MEmploymentChange {
 	    /*
 	     * Set up the mapper test harness.
 	     */
-	    WordMapper mapper = new WordMapper();
-	    mapDriver = new MapDriver<LongWritable, Text, Text, IntWritable>();
+	    MEmploymentMapper mapper = new MEmploymentMapper();
+	    mapDriver = new MapDriver<LongWritable, Text, Text, Text>();
 	    mapDriver.setMapper(mapper);
 
 	    /*
 	     * Set up the reducer test harness.
 	     */
-	    SumReducer reducer = new SumReducer();
-	    reduceDriver = new ReduceDriver<Text, IntWritable, Text, IntWritable>();
+	    EmploymentPercentReducer reducer = new EmploymentPercentReducer();
+	    reduceDriver = new ReduceDriver<Text, Text, Text, Text>();
 	    reduceDriver.setReducer(reducer);
 
 	    /*
 	     * Set up the mapper/reducer test harness.
 	     */
-	    mapReduceDriver = new MapReduceDriver<LongWritable, Text, Text, IntWritable, Text, IntWritable>();
+	    mapReduceDriver = new MapReduceDriver<LongWritable, Text, Text, Text, Text, Text>();
 	    mapReduceDriver.setMapper(mapper);
 	    mapReduceDriver.setReducer(reducer);
 	  }

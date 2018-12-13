@@ -1,15 +1,25 @@
 package com.revature.test;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import org.apache.hadoop.io.DoubleWritable;
+import org.apache.hadoop.io.IntWritable;
+import org.apache.hadoop.io.LongWritable;
+import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mrunit.mapreduce.MapDriver;
 import org.apache.hadoop.mrunit.mapreduce.MapReduceDriver;
 import org.apache.hadoop.mrunit.mapreduce.ReduceDriver;
 import org.junit.Before;
 import org.junit.Test;
 
+import com.revature.map.FEducationChangeUSMapper;
+import com.revature.reduce.FEducationChangeUSReducer;
+
 public class FEducationChangeUSTest {
-	private MapDriver<> mapDriver;
-	private ReduceDriver<> reduceDriver;
-	private MapReduceDriver<> mapReduceDriver;
+	private MapDriver<LongWritable, Text, Text, DoubleWritable> mapDriver;
+	private ReduceDriver<Text, DoubleWritable, Text, DoubleWritable> reduceDriver;
+	private MapReduceDriver<LongWritable, Text, Text, DoubleWritable, Text, DoubleWritable> mapReduceDriver;
 
 
 	@Before
@@ -18,21 +28,21 @@ public class FEducationChangeUSTest {
 	    /*
 	     * Set up the mapper test harness.
 	     */
-	    WordMapper mapper = new WordMapper();
-	    mapDriver = new MapDriver<LongWritable, Text, Text, IntWritable>();
+	    FEducationChangeUSMapper mapper = new FEducationChangeUSMapper();
+	    mapDriver = new MapDriver<LongWritable, Text, Text, DoubleWritable>();
 	    mapDriver.setMapper(mapper);
 
 	    /*
 	     * Set up the reducer test harness.
 	     */
-	    SumReducer reducer = new SumReducer();
-	    reduceDriver = new ReduceDriver<Text, IntWritable, Text, IntWritable>();
+	    FEducationChangeUSReducer reducer = new FEducationChangeUSReducer();
+	    reduceDriver = new ReduceDriver<Text, DoubleWritable, Text, DoubleWritable>();
 	    reduceDriver.setReducer(reducer);
 
 	    /*
 	     * Set up the mapper/reducer test harness.
 	     */
-	    mapReduceDriver = new MapReduceDriver<LongWritable, Text, Text, IntWritable, Text, IntWritable>();
+	    mapReduceDriver = new MapReduceDriver<LongWritable, Text, Text, DoubleWritable, Text, DoubleWritable>();
 	    mapReduceDriver.setMapper(mapper);
 	    mapReduceDriver.setReducer(reducer);
 	}
