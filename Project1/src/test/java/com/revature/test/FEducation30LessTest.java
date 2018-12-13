@@ -47,7 +47,7 @@ public class FEducation30LessTest {
 		 * set mapper input here
 		 */
 		mapDriver.withInput(new LongWritable(1), new Text(exampleInput));
-		mapDriver.withOutput(new Text("Chile"), new IntWritable(2014));
+		mapDriver.withOutput(new Text("Chile"), new IntWritable(2012));
 		mapDriver.runTest();
 	}
 	

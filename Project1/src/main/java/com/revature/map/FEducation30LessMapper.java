@@ -22,12 +22,17 @@ public class FEducation30LessMapper extends Mapper<LongWritable, Text, Text, Int
 		
 		if (line.contains(edu30Minus)) {
 			String[] columns = line.substring(1,line.length()-2).split("\",\"", -1);
-			
+			String doubleStr;
+			int year = -1;
 			for (int i = 4; i < columns.length; i++) {
-				String doubleStr = columns[i];
+				doubleStr = columns[i];
+				
 				if (doubleStr.length() > 0) {
-					context.write(new Text(columns[0]), new IntWritable(i + 1954));
+					year = i + 1954;
 				}
+			}
+			if (year > 0) {
+				context.write(new Text(columns[0]), new IntWritable(year));	
 			}
 		}
 	}
