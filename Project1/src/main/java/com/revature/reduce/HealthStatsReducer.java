@@ -8,6 +8,11 @@ import org.apache.hadoop.mapreduce.Reducer;
 public class HealthStatsReducer extends
 Reducer<Text, Text, Text, Text> {
 
+	/**
+	 * It calculates the percentage change between 1995 value and 2014.
+	 * If it's greater than the change that occurred in the US, AND ends up being
+	 * more than 1k$, it gets outputted.
+	 */
 	@Override
 	protected void reduce(Text key, Iterable<Text> values,
 			Reducer<Text, Text, Text, Text>.Context context) throws IOException,

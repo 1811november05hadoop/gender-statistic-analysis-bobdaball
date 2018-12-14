@@ -10,7 +10,10 @@ import org.apache.hadoop.mapreduce.Mapper;
 public class FEducation30LessMapper extends Mapper<LongWritable, Text, Text, IntWritable>{
 
 	String edu30Minus =  "Gross graduation ratio";
-
+/**
+ * It fist separates out input line, then chips off both edges to remove dangling commas and quotation marks 
+ * It then writes in context the latest year entry that is below 30%
+ */
 	@Override
 	protected void map(LongWritable key, Text value,
 			Mapper<LongWritable, Text, Text, IntWritable>.Context context)

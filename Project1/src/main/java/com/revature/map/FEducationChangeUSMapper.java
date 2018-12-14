@@ -9,7 +9,10 @@ import org.apache.hadoop.mapreduce.Mapper;
 public class FEducationChangeUSMapper extends Mapper<LongWritable, Text, Text, Text>{
 
 	String eduAttain = "Educational attainment, at least";
-	
+	/**
+	 * Upon receiving relevant data, it prepends the index value as a string for the value.
+	 * 
+	 */
 	@Override
 	protected void map(LongWritable key, Text value,
 			Mapper<LongWritable, Text, Text, Text>.Context context)

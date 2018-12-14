@@ -9,6 +9,9 @@ import org.apache.hadoop.mapreduce.Reducer;
 
 /**
  * Calculates Educational Attainment % change from 2000 to present, (or at least the closest years it can get)
+ * It guarantees the order of insertion from the prepended 2 digit string of the value.
+ * This gets converted to an integer, which is then used to hashmap and iterate through said
+ * Hashmap on to an array, to compare values between years.
  */
 public class FEducationChangeUSReducer extends Reducer<Text, Text, Text, Text>{
 

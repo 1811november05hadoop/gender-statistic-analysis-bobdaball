@@ -9,7 +9,10 @@ import org.apache.hadoop.mapreduce.Mapper;
 public class FEmploymentMapper extends Mapper<LongWritable, Text, Text, Text> {
 
 	boolean isCountry = false;
-
+	/**
+	 * The mapper ignores all entries prior to Afghanistan. Once it hits Afghanistan,
+	 * it grabs the values in the earliest year and latest year, calculates the % change, then writes in context.
+	 */
 	@Override
 	protected void map(LongWritable key, Text value,
 			Mapper<LongWritable, Text, Text, Text>.Context context)

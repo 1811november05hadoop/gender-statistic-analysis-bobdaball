@@ -10,7 +10,10 @@ public class HealthExpendituresMapper extends
 Mapper<LongWritable, Text, Text, Text> {
 
 	String criterion = "Health expenditure per capita, PPP";
-
+	/**
+	 * It filters out countries / regions that do not have health expenditure values at 19995 and 2014.
+	 * Upon filtering it, it passes to the reducer. 
+	 */
 	@Override
 	protected void map(LongWritable key, Text value,
 			Mapper<LongWritable, Text, Text, Text>.Context context)
