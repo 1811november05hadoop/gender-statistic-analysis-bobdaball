@@ -49,7 +49,7 @@ public class MEmploymentMapper extends Mapper<LongWritable, Text, Text, Text >{
 					double rate = ((numDiff[1] - numDiff[0]) / numDiff[0]) * 100;
 					rate = Math.round(rate * (double)100) / (double) 100;
 					
-					context.write(new Text("(" + columns[0] + ") Employment % change: "), new Text(Double.toString(rate) + "%\n~~~~~~~~~~~~~~~~~~~~~~~" ));
+					context.write(new Text("(" + columns[0] + ")"), new Text("Employment % change: " + Double.toString(rate) + "%\n~~~~~~~~~~~~~~~~~~~~~~~" ));
 				}
 			}
 		}
