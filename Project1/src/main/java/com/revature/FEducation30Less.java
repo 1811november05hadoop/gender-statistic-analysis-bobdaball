@@ -10,7 +10,6 @@ import org.apache.hadoop.mapreduce.lib.input.FileInputFormat;
 import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
 
 import com.revature.map.FEducation30LessMapper;
-import com.revature.reduce.FEducation30LessReducer;
 
 public class FEducation30Less {
 
@@ -31,7 +30,7 @@ public class FEducation30Less {
 		FileOutputFormat.setOutputPath(job, new Path(args[1]));
 
 		job.setMapperClass(FEducation30LessMapper.class);
-		job.setReducerClass(FEducation30LessReducer.class);
+		job.setNumReduceTasks(0);
 
 		job.setOutputKeyClass(Text.class);
 		job.setOutputValueClass(IntWritable.class);

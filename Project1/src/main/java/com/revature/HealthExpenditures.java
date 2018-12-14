@@ -18,13 +18,6 @@ public class HealthExpenditures {
 					"Usage: HealthExpenditures <input dir> <output dir>\n");
 			System.exit(-1);
 		}
-/*
- * Health expenditure per capita, PPP (constant 2011 international $)
- * Health expenditure, public (% of GDP)
- * 
- * Outstanding loan for health or emergencies, female(% age 15+)
- * Outstanding loan for health or emergencies, male (% age 15+)
- */
 		Job job = new Job();
 
 		job.setJarByClass(HealthExpenditures.class);

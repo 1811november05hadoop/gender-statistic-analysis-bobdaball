@@ -9,7 +9,6 @@ import org.apache.hadoop.mapreduce.lib.input.FileInputFormat;
 import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
 
 import com.revature.map.FEmploymentMapper;
-import com.revature.reduce.EmploymentPercentReducer;
 
 public class FEmploymentChange {
 
@@ -30,7 +29,7 @@ public class FEmploymentChange {
 			FileOutputFormat.setOutputPath(job, new Path(args[1]));
 			
 			job.setMapperClass(FEmploymentMapper.class);
-			job.setReducerClass(EmploymentPercentReducer.class);
+			job.setNumReduceTasks(0);
 			
 			job.setOutputKeyClass(Text.class);
 			job.setOutputValueClass(Text.class);
