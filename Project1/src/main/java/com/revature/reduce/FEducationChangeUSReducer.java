@@ -1,8 +1,7 @@
 package com.revature.reduce;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
 
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Reducer;
@@ -19,28 +18,36 @@ public class FEducationChangeUSReducer extends Reducer<Text, Text, Text, Text>{
 					throws IOException, InterruptedException {
 		// TODO Auto-generated method stub
 
-		List<Double> strArray = new ArrayList<Double>();
 		
 		/**
 		 * First 2 characters in string indicate the order key:value was entered in Mapper,
 		 * Thus, the method takes the substring of said characters to sort it in an array.
 		 * The start value and end values are taken to measure % changes.
 		 */
+		int arrSize = 0;
+		HashMap<Integer, Double> indexMap = new HashMap<Integer, Double>();
+		
 		for (Text value : values) {
 			String valStr = value.toString();
+			int valStrSize = valStr.length();
 			int indexValue = Integer.parseInt(valStr.substring(0,2).trim());
-			
-			strArray.add(indexValue, Double.parseDouble(valStr.substring(2, value.getLength())));
+			double doubleValue = Double.parseDouble(valStr.substring(2, valStrSize));
+			indexMap.put(indexValue, doubleValue);
+			arrSize++;
+		}
+		double[] dubArray = new double[arrSize];
+		
+		for (int i = 0; i < arrSize; i++) {
+			dubArray[i] = indexMap.get(i);
 		}
 		
-		double prevVal = strArray.get(0);
+		double prevVal = dubArray[0];
 		double newVal;
-		int arrSize = strArray.size();
-		
+
 		double changeSums = 0;
 		double percentChange;
 		for (int i = 1; i < arrSize; i++) {
-			newVal = strArray.get(i);
+			newVal = dubArray[i];
 			percentChange = ((newVal - prevVal) / prevVal) * (double) 100;
 			changeSums += percentChange;
 			prevVal = newVal;

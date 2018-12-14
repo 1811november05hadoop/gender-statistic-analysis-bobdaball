@@ -29,8 +29,7 @@ public class FEducationChangeUSMapper extends Mapper<LongWritable, Text, Text, T
 					String indexVal = integer <= 9 ? integer + " " : Integer.toString(integer);
 					
 					context.write(new Text(category + ": "), new Text(indexVal + doubleStr.toString()));
-					integer++;
-					
+					integer++;	
 				}
 			}
 		}
