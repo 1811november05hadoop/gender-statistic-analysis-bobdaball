@@ -30,7 +30,7 @@ public class FEducation30LessTest {
 		 */
 		
 		mapDriver.withInput(new LongWritable(1), new Text(exampleInput));
-		mapDriver.withOutput(new Text("Chile"), new IntWritable(2012));
+		mapDriver.withOutput(new Text("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n(Chile)  |Gross graduation ratio, tertiary, female (%)| graduation rate: 12.67% |"), new IntWritable(2012));
 		mapDriver.runTest();
 	}
 }
