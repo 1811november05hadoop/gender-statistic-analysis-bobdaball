@@ -41,15 +41,13 @@ public class FEducationChangeUSReducer extends Reducer<Text, Text, Text, Text>{
 		double percentChange;
 		for (int i = 1; i < arrSize; i++) {
 			newVal = strArray.get(i);
-			percentChange = ((newVal - prevVal) / prevVal);
+			percentChange = ((newVal - prevVal) / prevVal) * (double) 100;
 			changeSums += percentChange;
 			prevVal = newVal;
 		}
 
-
-	
-//		double percentChange = ((finalVal - initialVal) / initialVal) * (double) 100;
-//		percentChange = Math.round(percentChange * (double) 100) / (double) 100;		
-		context.write(key, new Text("Average increase: " + Double.toString(changeSums / (double) arrSize) + "%\n~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"));
+		changeSums /= (double) (arrSize - 1);
+		changeSums = Math.round(changeSums * (double)100) / (double) 100;
+		context.write(key, new Text("Average increase: " + Double.toString(changeSums) + "%\n~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"));
 	}
 }
