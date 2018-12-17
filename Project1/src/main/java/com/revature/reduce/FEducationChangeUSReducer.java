@@ -1,8 +1,8 @@
 package com.revature.reduce;
 
 import java.io.IOException;
-import java.util.HashMap;
 
+import org.apache.hadoop.io.DoubleWritable;
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Reducer;
 
@@ -13,51 +13,26 @@ import org.apache.hadoop.mapreduce.Reducer;
  * This gets converted to an integer, which is then used to hashmap and iterate through said
  * Hashmap on to an array, to compare values between years.
  */
-public class FEducationChangeUSReducer extends Reducer<Text, Text, Text, Text>{
+public class FEducationChangeUSReducer extends Reducer<Text, DoubleWritable, Text, Text>{
 
 	@Override
-	protected void reduce(Text key, Iterable<Text> values,
-			Reducer<Text, Text, Text, Text>.Context context)
+	protected void reduce(Text key, Iterable<DoubleWritable> values,
+			Reducer<Text, DoubleWritable, Text, Text>.Context context)
 					throws IOException, InterruptedException {
 		// TODO Auto-generated method stub
 
-		
-		/**
-		 * First 2 characters in string indicate the order key:value was entered in Mapper,
-		 * Thus, the method takes the substring of said characters to sort it in an array.
-		 * The start value and end values are taken to measure % changes.
-		 */
 		int arrSize = 0;
-		HashMap<Integer, Double> indexMap = new HashMap<Integer, Double>();
-		
-		for (Text value : values) {
-			String valStr = value.toString();
-			int valStrSize = valStr.length();
-			int indexValue = Integer.parseInt(valStr.substring(0,2).trim());
-			double doubleValue = Double.parseDouble(valStr.substring(2, valStrSize));
-			indexMap.put(indexValue, doubleValue);
+
+		double totalInc = 0;
+
+		for (DoubleWritable value: values) {
+			totalInc += value.get();
 			arrSize++;
 		}
-		double[] dubArray = new double[arrSize];
-		
-		for (int i = 0; i < arrSize; i++) {
-			dubArray[i] = indexMap.get(i);
-		}
-		
-		double prevVal = dubArray[0];
-		double newVal;
+		totalInc = totalInc / (double) arrSize;
 
-		double changeSums = 0;
-		double percentChange;
-		for (int i = 1; i < arrSize; i++) {
-			newVal = dubArray[i];
-			percentChange = ((newVal - prevVal) / prevVal) * (double) 100;
-			changeSums += percentChange;
-			prevVal = newVal;
-		}
+		totalInc = Math.round(totalInc * (double)100) / (double) 100;
 
-		changeSums /= (double) (arrSize - 1);
-		changeSums = Math.round(changeSums * (double)100) / (double) 100;
-		context.write(key, new Text("Average increase: " + Double.toString(changeSums) + "%\n~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"));
+		context.write(key, new Text("Average increase: " + Double.toString(totalInc) + "%\n~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"));
 	}
 }

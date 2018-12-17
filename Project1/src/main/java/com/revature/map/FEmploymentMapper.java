@@ -20,6 +20,8 @@ public class FEmploymentMapper extends Mapper<LongWritable, Text, Text, Text> {
 		// TODO Auto-generated method stub
 		String criterion = "Employment to population ratio, 15+, female (%) (modeled ILO estimate)";
 		String line = value.toString();
+		int firstYr = 2000;
+		int secondYr = 2001;
 		double[] numDiff = new double[2];
 		if (!isCountry) {
 			if (line.contains("Afghanistan")) {
@@ -37,8 +39,10 @@ public class FEmploymentMapper extends Mapper<LongWritable, Text, Text, Text> {
 					if (doubleStr.length() > 0) {
 						if (numDiff[0] == 0) {
 							numDiff[0] = Double.parseDouble(doubleStr);
+							firstYr = i + 1956;
 						} else {
 							numDiff[1] = Double.parseDouble(doubleStr);
+							secondYr = i + 1956;
 						}
 					}
 				}
@@ -47,7 +51,7 @@ public class FEmploymentMapper extends Mapper<LongWritable, Text, Text, Text> {
 					double rate = ((numDiff[1] - numDiff[0]) / numDiff[0]) * 100;
 					rate = Math.round(rate * (double)100) / (double) 100;
 					
-					context.write(new Text("(" + columns[0] + ")"), new Text("Employment % change: " + Double.toString(rate) + "%\n~~~~~~~~~~~~~~~~~~~~~~~" ));
+					context.write(new Text("(" + columns[0] + ")"), new Text("Female Employment % change" + "(" + firstYr +"-"  + secondYr + ")" + ": " + Double.toString(rate) + "%\n~~~~~~~~~~~~~~~~~~~~~~~" ));
 				}
 			}
 		}

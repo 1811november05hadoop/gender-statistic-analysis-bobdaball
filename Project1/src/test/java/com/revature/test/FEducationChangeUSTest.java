@@ -3,6 +3,7 @@ package com.revature.test;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.hadoop.io.DoubleWritable;
 import org.apache.hadoop.io.LongWritable;
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mrunit.mapreduce.MapDriver;
@@ -15,9 +16,9 @@ import com.revature.map.FEducationChangeUSMapper;
 import com.revature.reduce.FEducationChangeUSReducer;
 
 public class FEducationChangeUSTest {
-	private MapDriver<LongWritable, Text, Text, Text> mapDriver;
-	private ReduceDriver<Text, Text, Text, Text> reduceDriver;
-	private MapReduceDriver<LongWritable, Text, Text, Text, Text, Text> mapReduceDriver;
+	private MapDriver<LongWritable, Text, Text, DoubleWritable> mapDriver;
+	private ReduceDriver<Text, DoubleWritable, Text, Text> reduceDriver;
+	private MapReduceDriver<LongWritable, Text, Text, DoubleWritable, Text, Text> mapReduceDriver;
 
 	String entry1 = "\"United States\",\"USA\",\"Educational attainment, at least Bachelor's or equivalent, population 25+, female (%) (cumulative)\",\"SE.TER.CUAT.BA.FE.ZS\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"31.39076\",\"32.00147\",\"32.67396\",\"\",";
 
@@ -32,8 +33,8 @@ public class FEducationChangeUSTest {
 //	String entry6 = "\"United States\",\"USA\",\"Educational attainment, at least completed upper secondary, population 25+, female (%) (cumulative)\",\"SE.SEC.CUAT.UP.FE.ZS\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"66.8\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"77.17914\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"85.43373\",\"85.43646\",\"86.38113\",\"\",\"87.2264\",\"87.13267\",\"87.66015\",\"88.04637\",\"88.03673\",\"88.62399\",\"88.85883\",\"88.75894\",\"\",";
 //
 //	String entry7 = "\"United States\",\"USA\",\"Educational attainment, at least Master's or equivalent, population 25+, female (%) (cumulative)\",\"SE.TER.CUAT.MS.FE.ZS\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"11.20828\",\"11.61702\",\"11.98897\",\"\",";
-	String bachelor = "Educational attainment, at least Bachelor's or equivalent, population 25+, female (%) (cumulative): ";
-	String postSecondary = "Educational attainment, at least completed post-secondary, population 25+, female (%) (cumulative): ";
+	String bachelor = "Educational attainment, at least Bachelor's or equivalent, population 25+, female (%) (cumulative)";
+	String postSecondary = "Educational attainment, at least completed post-secondary, population 25+, female (%) (cumulative)";
 
 	@Before
 	public void setUp() {
@@ -42,49 +43,44 @@ public class FEducationChangeUSTest {
 	     * Set up the mapper test harness.
 	     */
 	    FEducationChangeUSMapper mapper = new FEducationChangeUSMapper();
-	    mapDriver = new MapDriver<LongWritable, Text, Text, Text>();
+	    mapDriver = new MapDriver<LongWritable, Text, Text, DoubleWritable>();
 	    mapDriver.setMapper(mapper);
 
 	    /*
 	     * Set up the reducer test harness.
 	     */
 	    FEducationChangeUSReducer reducer = new FEducationChangeUSReducer();
-	    reduceDriver = new ReduceDriver<Text, Text, Text, Text>();
+	    reduceDriver = new ReduceDriver<Text, DoubleWritable, Text, Text>();
 	    reduceDriver.setReducer(reducer);
 
 	    /*
 	     * Set up the mapper/reducer test harness.
 	     */
-	    mapReduceDriver = new MapReduceDriver<LongWritable, Text, Text, Text, Text, Text>();
+	    mapReduceDriver = new MapReduceDriver<LongWritable, Text, Text, DoubleWritable, Text, Text>();
 	    mapReduceDriver.setMapper(mapper);
 	    mapReduceDriver.setReducer(reducer);
 	}
 
 	@Test
 	public void testMapper() {
-		   /*
-	     * For this test, the mapper's input will be \"1 cat cat dog\" 
-	     */
+
 	    mapDriver.withInput(new LongWritable(1), new Text(entry1));
-	    /*
-	     * The expected output is \"cat 1\", \"cat 1\", and \"dog 1\".
-	     */
-//	    mapDriver.withOutput(new Text("\"Educational attainment, at least Bachelor's or equivalent, population 25+, female (%) (cumulative)\""), new Text("31.39076"));
-	    mapDriver.addOutput(new Text(bachelor), new Text("0 31.39076"));
-	    mapDriver.addOutput(new Text(bachelor), new Text("1 32.00147")); 
-	    mapDriver.addOutput(new Text(bachelor), new Text("2 32.67396"));
+
+	    
+	    mapDriver.withOutput(new Text(bachelor), new DoubleWritable(0.6107099999999974));	    
+	    mapDriver.withOutput(new Text(bachelor), new DoubleWritable(0.6724900000000034));
 	    /*
 	     * Run the test.
 	     */
+	   
 	    mapDriver.runTest();
 	}
 
 	@Test
 	public void testReducer() {
-	    List<Text> values = new ArrayList<Text>();
-	    values.add(new Text("0 31.39076"));
-	    values.add(new Text("1 32.00147"));
-	    values.add(new Text("2 32.67396"));
+	    List<DoubleWritable> values = new ArrayList<DoubleWritable>();
+	    values.add(new DoubleWritable(0.61071));
+	    values.add(new DoubleWritable(0.67249));
 
 	    /*
 	     * For this test, the reducer's input will be \"cat 1 1\".
@@ -94,7 +90,7 @@ public class FEducationChangeUSTest {
 	    /*
 	     * The expected output is \"cat 2\"
 	     */
-	    reduceDriver.withOutput(new Text(bachelor), new Text("Average increase: 2.02%\n~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"));
+	    reduceDriver.withOutput(new Text(bachelor), new Text("Average increase: 0.64%\n~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"));
 
 	    /*
 	     * Run the test.
@@ -112,7 +108,7 @@ public class FEducationChangeUSTest {
 		/*
 		 * The expected output (from the reducer) is \"cat 2\", \"dog 1\". 
 		 */
-		mapReduceDriver.addOutput(new Text(postSecondary), new Text("Average increase: 3.0%\n~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"));
+		mapReduceDriver.addOutput(new Text(postSecondary), new Text("Average increase: 1.07%\n~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"));
 
 		/*
 		 * Run the test.

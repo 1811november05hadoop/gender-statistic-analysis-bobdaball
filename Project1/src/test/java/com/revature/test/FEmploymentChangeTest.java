@@ -25,7 +25,7 @@ public class FEmploymentChangeTest {
 		/*
 		 * The expected output is "cat 1", "cat 1", and "dog 1".
 		 */
-		mapDriver.withOutput(new Text("(Afghanistan)"), new Text("Employment % change: 13.73%\n~~~~~~~~~~~~~~~~~~~~~~~"));
+		mapDriver.withOutput(new Text("(Afghanistan)"), new Text("Female Employment % change(2000-2016): 13.73%\n~~~~~~~~~~~~~~~~~~~~~~~"));
 
 		/*
 		 * Run the test.

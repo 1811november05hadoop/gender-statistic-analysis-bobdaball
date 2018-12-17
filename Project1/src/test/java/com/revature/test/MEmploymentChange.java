@@ -34,7 +34,7 @@ public class MEmploymentChange {
 	   */
 	  @Test
 	  public void testMapper() {
-		  String expected = "Employment % change: -7.28%\n~~~~~~~~~~~~~~~~~~~~~~~";
+		  String expected = "Male Employment % change(2000-2016): -7.28%\n~~~~~~~~~~~~~~~~~~~~~~~";
 	    /*
 	     * For this test, the mapper's input will be "1 cat cat dog" 
 	     */
