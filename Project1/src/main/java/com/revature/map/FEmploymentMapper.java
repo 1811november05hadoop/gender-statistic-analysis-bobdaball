@@ -28,7 +28,7 @@ public class FEmploymentMapper extends Mapper<LongWritable, Text, Text, Text> {
 				isCountry = true;
 			} 
 		} 
-		System.out.println(isCountry + " hi");
+
 		if (isCountry) {
 			if (line.contains(criterion)) {
 				String[] columns = line.substring(1,line.length()-2).split("\",\"", -1);
