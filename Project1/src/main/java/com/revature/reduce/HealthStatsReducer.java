@@ -30,7 +30,7 @@ Reducer<Text, Text, Text, Text> {
 			
 			initialAmount = Math.round(initialAmount * (double) 100) / (double) 100;
 			newAmount = Math.round(newAmount * (double) 100) / (double) 100;
-			if (rateRise > usRate && newAmount > 1000.00) {
+			if (rateRise > usRate && (newAmount - initialAmount) > 1000.00) {
 				context.write(new Text("(" + key + ")"), new Text("| in 2011$ values PPP, 1995 health cost: " + initialAmount + "| 2014 health cost: " + newAmount + "| cost increase (%): " + rateRise + "%\n~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"));
 			}
 		}
